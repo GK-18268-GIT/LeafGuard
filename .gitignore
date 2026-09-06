@@ -12,13 +12,7 @@ backend/.pytest_cache/
 # Environment variables
 # =========================
 
-.env
-.env.*
-!.env.example
-
 backend/.env
-backend/.env.*
-!backend/.env.example
 
 frontend/leafguard/.env
 frontend/leafguard/.env.*
@@ -69,3 +63,15 @@ __pycache__/
 # =========================
 
 .vercel/
+
+# =========================
+# Backend test
+# =========================
+
+backend.http
+
+# =========================
+# Test Images
+# =========================
+
+backend/testImages
