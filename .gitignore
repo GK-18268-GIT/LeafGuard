@@ -75,3 +75,5 @@ backend.http
 # =========================
 
 backend/testImages
+
+node_modules
