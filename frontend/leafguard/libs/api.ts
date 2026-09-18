@@ -13,7 +13,7 @@ export interface Suggestions {
     urgency: string;
     description: string;
     agronomicTechniques: AgronomicTechnique[];
-    fertilizer: Fertilizer[];
+    fertilizers: Fertilizer[];
     plantingTips: PlantingTip[];
 }
 
@@ -38,7 +38,22 @@ export async function predictDisease(
         body: form,
     });
     if (!response.ok) throw new Error(`Prediction request failed: ${response.status}`);
-    return response.json() as Promise<PredictResponse>;
+    const data = await response.json() as PredictResponse & {
+        suggestions?: Partial<Suggestions> & { fertilizer?: Fertilizer[] };
+    };
+    const suggestions = data.suggestions ?? {};
+
+    return {
+        ...data,
+        suggestions: {
+            severity: suggestions.severity ?? "healthy",
+            urgency: suggestions.urgency ?? "",
+            description: suggestions.description ?? "",
+            agronomicTechniques: suggestions.agronomicTechniques ?? [],
+            fertilizers: suggestions.fertilizers ?? suggestions.fertilizer ?? [],
+            plantingTips: suggestions.plantingTips ?? [],
+        },
+    };
 }
 
 export interface ChatMessage { role: "user" | "assistant", content: string; }

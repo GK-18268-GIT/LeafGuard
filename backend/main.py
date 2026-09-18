@@ -34,7 +34,9 @@ async def lifespan(app: FastAPI):
 app = FastAPI(title="LeafGuard API", lifespan=lifespan)
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=os.getenv("ALLOWED_ORIGINS", "http://localhost:3000").split(","),
+    allow_origins=os.getenv(
+        "ALLOWED_ORIGINS", "http://localhost:3000,http://localhost:5173"
+    ).split(","),
     allow_methods=["*"],
     allow_headers=["*"],
 )
